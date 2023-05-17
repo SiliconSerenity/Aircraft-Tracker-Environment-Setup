@@ -3,13 +3,24 @@
 # Append path to .bashrc
 echo "Appending path to .bashrc..."
 echo 'export PATH=$PATH:$HOME/.local/bin' >> ~/.bashrc
-
+#export path to affect current session
+export PATH=$PATH:$HOME/.local/bin
 if [ $? -eq 0 ]; then
     echo "Path appended successfully."
 else
     echo "Failed to append path to .bashrc. Please check permissions."
     exit 1
 fi
+
+# Upgrade pip
+echo "Upgrading pip..."
+if python -m pip install --upgrade pip; then
+    echo "Successfully upgraded pip."
+else
+    echo "Failed to upgrade pip. Please check your internet connection and try again."
+    exit 1
+fi
+
 
 # Install the python packages
 echo "Installing Python packages..."
@@ -24,7 +35,7 @@ fi
 
 # Install the library
 echo "Installing librtlsdr-dev..."
-sudo apt-get install librtlsdr-dev
+sudo apt-get install librtlsdr-dev -y
 
 if [ $? -eq 0 ]; then
     echo "librtlsdr-dev installed successfully."
